@@ -1,0 +1,22 @@
+import kotlin.math.sqrt
+//Расстояние между точками (с использованием класса Точка)
+//Две точки находятся на координатной плоскости.
+// Каждая точка описана своими координатами.
+// Найти расстояние между указанными точками.
+fun main() {
+    val point1 = Point(3.0, 4.0)
+    val point2 = Point(6.0, 8.0)
+
+    val distance = point1.distanceTo(point2)
+    println("Расстояние между точками: $distance")
+}
+
+import kotlin.math.sqrt
+
+class Point(val x: Double, val y: Double) {
+    fun distanceTo(other: Point): Double {
+        val rx = x - other.x
+        val ry = y - other.y
+        return sqrt(rx * rx + ry * ry)
+    }
+}
