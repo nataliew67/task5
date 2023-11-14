@@ -1,0 +1,48 @@
+//Точка и треугольник (создать класс Точка и класс Треугольник)
+//Треугольник описан координатами трех своих вершин.
+//Указаны координаты отдельной точки. Составить программу,
+// показывающую где находится точка - внутри или вне треугольника.
+// Треугольник и точка находятся на координатной плоскости.
+fun main() {
+    val point1 = Point(0.0, 0.0)
+    val point2 = Point(4.0, 0.0)
+    val point3 = Point(2.0, 4.0)
+
+    val triangle = Triangle(point1, point2, point3)
+
+    println("Введите координаты точки(x,y):")
+    val x = readLine()?.toDoubleOrNull()
+    val y = readLine()?.toDoubleOrNull()
+
+    if (x != null && y != null) {
+        val Poiint = Point(x, y)
+        if (triangle.isPoint(Poiint)) {
+            println("Точка внутри треугольника")
+        } else {
+            println("Точка вне треугольника")
+        }
+
+
+    } else {
+        println("Введены некорректные данные!")
+    }
+}
+
+class Point(val x: Double, val y: Double)
+
+class Triangle(val point1: Point, val point2: Point, val point3: Point) {
+    fun isPoint(point: Point): Boolean {
+        val a1 = loc(point, point1, point2) < 0.0
+        val a2 = loc(point, point2, point3) < 0.0
+        val a3 = loc(point, point3, point1) < 0.0
+
+        return ((a1 == a2) && (a2 == a3))
+    }
+
+    private fun loc(p1: Point, p2: Point, p3: Point): Double {
+        //вычисляет знак произведения разностей заданных точек
+        //если + - точка с одной стороны от ребер, - с другой, 0 - лежит на ребре
+
+        return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y)
+    }
+}
