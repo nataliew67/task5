@@ -1,43 +1,50 @@
+//Выбор наибольшего и наименьшего расстояний
+// (обязательно использовать класс Точка)
+// Множество точек расположено на координатной плоскости.
+// Количество точек задается в консоли при запуске программы
+// и оно должно быть больше двух. Каждая точка задается своими
+// координатами. Точки не совпадают друг с другом. Требуется
+// найти минимальное и максимальное расстояние между точками.
+import kotlin.math.sqrt
+fun main() {
+    println("Введите количество точек:")
+    val n = readln().toInt()
+    if (n <= 2) {
+        println("Количество точек должно быть больше двух")
+    }
+    if (n > 2) {
+        val points = mutableListOf<Point>()
+
+        for (i in 1..n) {
+            println("Введите координаты точки $i:")
+            val (x, y) = readln().split(" ").map { it.toDouble() }   //считывает и разделяет строку на координаты
+            points.add(Point(x, y)) //создание экземпляра класса поинт и добавление в список
+        }
+
+        var minDistance = Double.MAX_VALUE
+        var maxDistance = Double.MIN_VALUE
+
+        for (i in 0..<points.size) {
+            for (j in i + 1..points.size) {
+                val distance = points[i].distanceTo(points[j])
+                if (distance < minDistance) {
+                    minDistance = distance
+                }
+                if (distance > maxDistance) {
+                    maxDistance = distance
+                }
+            }
+        }
+
+        println("Минимальное расстояние: $minDistance \n Максимальное расстояние: $maxDistance")
+    }
+}
 import kotlin.math.sqrt
 
-fun main() {
-println("Введите количество точек:")
-val n = readLine()!!.toInt()
-
-require(n > 2) { "Количество точек должно быть больше двух" }
-
-val points = mutableListOf<Point>()
-
-for (i in 1..n) {
-println("Введите координаты точки $i:")
-val (x, y) = readLine()!!.split(" ").map { it.toDouble() }
-points.add(Point(x, y))
-}
-
-var minDistance = Double.MAX_VALUE
-var maxDistance = Double.MIN_VALUE
-
-for (i in 0 until points.size - 1) {
-for (j in i + 1 until points.size) {
-val distance = points[i].distanceTo(points[j])
-if (distance < minDistance) {
-minDistance = distance
-}
-if (distance > maxDistance) {
-maxDistance = distance
-}
-}
-}
-
-println("Минимальное расстояние: $minDistance")
-println("Максимальное расстояние: $maxDistance")
-}
-
-
 class Point(val x: Double, val y: Double) {
-fun distanceTo(other: Point): Double {
-val dx = x - other.x
-val dy = y - other.y
-return sqrt(dx * dx + dy * dy)
-}
+    fun distanceTo(other: Point): Double {
+        val dx = x - other.x
+        val dy = y - other.y
+        return sqrt(dx * dx + dy * dy)
+    }
 }
